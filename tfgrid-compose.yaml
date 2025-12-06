@@ -1,0 +1,102 @@
+name: tfgrid-erpnext
+version: "1.0.0"
+description: Open-source ERP system (Frappe/ERPNext)
+
+patterns:
+  recommended: single-vm
+  supported:
+    - single-vm
+
+resources:
+  cpu:
+    min: 2
+    recommended: 4
+  memory:
+    min: 4096
+    recommended: 8192
+  disk:
+    min: 50
+    recommended: 100
+  ports:
+    - 22:ssh
+    - 80:http
+    - 443:https
+
+hooks:
+  setup: deployment/setup.sh
+  configure: deployment/configure.sh
+  healthcheck: deployment/healthcheck.sh
+
+environment:
+  - name: DOMAIN
+    required: true
+    description: "Public domain for ERPNext (e.g., erp.example.com)"
+  - name: SSL_EMAIL
+    required: false
+    description: "Email for Let's Encrypt SSL certificates"
+  - name: SITE_NAME
+    required: false
+    description: "ERPNext site name (default: derived from domain)"
+  - name: ADMIN_PASSWORD
+    required: false
+    secret: true
+    description: "Admin password (auto-generated if not set)"
+  - name: DB_PASSWORD
+    required: false
+    secret: true
+    description: "MariaDB password (auto-generated if not set)"
+  - name: ERPNEXT_VERSION
+    required: false
+    description: "ERPNext version (default: latest)"
+
+commands:
+  backup:
+    script: /opt/erpnext/scripts/backup.sh
+    description: "Create site backup"
+    args: "[--site sitename]"
+  restore:
+    script: /opt/erpnext/scripts/restore.sh
+    description: "Restore site from backup"
+    args: "--backup /path/to/backup"
+  list-backups:
+    script: /opt/erpnext/scripts/list-backups.sh
+    description: "List available backups"
+  logs:
+    script: /opt/erpnext/scripts/logs.sh
+    description: "View ERPNext logs"
+    args: "[frontend|backend|scheduler|worker|db|redis] [--follow]"
+  shell:
+    script: /opt/erpnext/scripts/shell.sh
+    description: "Open bench console"
+  bench:
+    script: /opt/erpnext/scripts/bench.sh
+    description: "Run bench commands"
+    args: "<bench-command>"
+  migrate:
+    script: /opt/erpnext/scripts/migrate.sh
+    description: "Run database migrations"
+  restart:
+    script: /opt/erpnext/scripts/restart.sh
+    description: "Restart ERPNext services"
+
+status:
+  check_interval: 60
+  endpoints:
+    - path: /api/method/ping
+      expected_status: 200
+
+logging:
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+tags:
+  - erpnext
+  - erp
+  - frappe
+  - business
+  - accounting
+  - inventory
+  - docker
+  - caddy
