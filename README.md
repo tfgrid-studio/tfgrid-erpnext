@@ -10,6 +10,7 @@ Deploy a complete ERPNext installation with:
 - **MariaDB** - Database backend
 - **Redis** - Caching and queuing
 - **Caddy** - Automatic HTTPS with Let's Encrypt
+- **Automatic DNS** - Optional DNS A record creation (Name.com, Namecheap, Cloudflare)
 
 ## Features
 
@@ -24,36 +25,120 @@ Deploy a complete ERPNext installation with:
 
 ## Quick Start
 
+### Basic Deployment (Interactive)
+
+The easiest way to deploy - answers questions interactively:
+
 ```bash
-# Deploy with tfgrid-compose
-tfgrid-compose up tfgrid-erpnext
+tfgrid-compose up tfgrid-erpnext -i
+```
 
-# Or manually:
-cp .env.example .env
-nano .env  # Set your domain
+This will prompt you for:
+1. Domain name
+2. DNS provider (optional automatic setup)
+3. Company information
+4. Admin credentials
+5. Resource allocation
+6. Node selection
 
-tfgrid-compose up .
+### One-Line Deployment
+
+Deploy with all settings on the command line:
+
+```bash
+tfgrid-compose up tfgrid-erpnext \
+  --env DOMAIN=erp.example.com \
+  --env SSL_EMAIL=admin@example.com \
+  --env COMPANY_NAME="My Company" \
+  --env COUNTRY="United States" \
+  --env CURRENCY=USD
+```
+
+### Full Deployment Example
+
+Complete deployment with DNS automation and all options:
+
+```bash
+# With Cloudflare DNS and company setup
+tfgrid-compose up tfgrid-erpnext \
+  --env DOMAIN=erp.example.com \
+  --env SSL_EMAIL=admin@example.com \
+  --env DNS_PROVIDER=cloudflare \
+  --env CLOUDFLARE_API_TOKEN=your-cf-token \
+  --env COMPANY_NAME="Acme Corporation" \
+  --env COMPANY_ABBR=ACME \
+  --env COUNTRY="United States" \
+  --env CURRENCY=USD \
+  --env TIMEZONE=America/New_York \
+  --env WORKER_COUNT=4 \
+  --env GUNICORN_WORKERS=8 \
+  --cpu 4 \
+  --memory 8192 \
+  --disk 200
+
+# With Name.com DNS
+tfgrid-compose up tfgrid-erpnext \
+  --env DOMAIN=erp.example.com \
+  --env DNS_PROVIDER=name.com \
+  --env NAMECOM_USERNAME=myuser \
+  --env NAMECOM_API_TOKEN=your-token \
+  --env COMPANY_NAME="My Business"
 ```
 
 ## Configuration
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DOMAIN` | Yes | Public domain for ERPNext |
-| `SSL_EMAIL` | No | Email for Let's Encrypt |
-| `SITE_NAME` | No | ERPNext site name (default: domain) |
-| `ADMIN_PASSWORD` | No | Admin password (auto-generated) |
-| `DB_PASSWORD` | No | Database password (auto-generated) |
-| `ERPNEXT_VERSION` | No | ERPNext version (default: v15) |
+#### Domain & DNS
 
-### Example .env
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DOMAIN` | **Yes** | - | Public domain for ERPNext |
+| `SSL_EMAIL` | No | - | Email for Let's Encrypt |
+| `DNS_PROVIDER` | No | `manual` | DNS provider: `manual`, `name.com`, `namecheap`, `cloudflare` |
+| `NAMECOM_USERNAME` | If name.com | - | Name.com username |
+| `NAMECOM_API_TOKEN` | If name.com | - | Name.com API token |
+| `NAMECHEAP_API_USER` | If namecheap | - | Namecheap API username |
+| `NAMECHEAP_API_KEY` | If namecheap | - | Namecheap API key |
+| `CLOUDFLARE_API_TOKEN` | If cloudflare | - | Cloudflare API token |
 
-```bash
-DOMAIN=erp.example.com
-SSL_EMAIL=admin@example.com
-```
+#### ERPNext Settings
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `SITE_NAME` | No | from domain | ERPNext site name |
+| `ADMIN_PASSWORD` | No | auto-generated | Admin password |
+| `ERPNEXT_VERSION` | No | `latest` | ERPNext version |
+
+#### Company Setup
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `COMPANY_NAME` | No | - | Company name for initial setup |
+| `COMPANY_ABBR` | No | - | Company abbreviation |
+| `COUNTRY` | No | `United States` | Country for localization |
+| `CURRENCY` | No | `USD` | Default currency |
+| `TIMEZONE` | No | `America/New_York` | Server timezone |
+
+#### Database
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DB_PASSWORD` | No | auto-generated | MariaDB password |
+| `DB_ROOT_PASSWORD` | No | auto-generated | MariaDB root password |
+
+#### Performance
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `WORKER_COUNT` | No | `2` | Number of background workers |
+| `GUNICORN_WORKERS` | No | `4` | Number of Gunicorn workers |
+
+#### Backup
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `BACKUP_RETENTION_DAYS` | No | `30` | Days to keep backups |
 
 ## Commands
 
