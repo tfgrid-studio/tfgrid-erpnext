@@ -103,20 +103,16 @@ tfgrid-compose up tfgrid-erpnext \
 
 #### Domain & DNS
 
-> **Recommended:** Use `name.com`, `cloudflare`, or `godaddy` for fully automated DNS setup. Namecheap requires manual IP whitelisting in their dashboard before API calls work.
-
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `DOMAIN` | **Yes** | - | Public domain for ERPNext |
 | `SSL_EMAIL` | No | - | Email for Let's Encrypt |
-| `DNS_PROVIDER` | No | `manual` | DNS provider: `manual`, `name.com`, `cloudflare`, `godaddy`, `namecheap` |
+| `DNS_PROVIDER` | No | `manual` | DNS provider: `manual`, `name.com`, `cloudflare`, `godaddy` |
 | `NAMECOM_USERNAME` | If name.com | - | Name.com username |
 | `NAMECOM_API_TOKEN` | If name.com | - | Name.com API token |
 | `CLOUDFLARE_API_TOKEN` | If cloudflare | - | Cloudflare API token |
 | `GODADDY_API_KEY` | If godaddy | - | GoDaddy API key |
 | `GODADDY_API_SECRET` | If godaddy | - | GoDaddy API secret |
-| `NAMECHEAP_API_USER` | If namecheap | - | Namecheap API username (requires IP whitelisting) |
-| `NAMECHEAP_API_KEY` | If namecheap | - | Namecheap API key (requires IP whitelisting) |
 
 #### ERPNext Settings
 
