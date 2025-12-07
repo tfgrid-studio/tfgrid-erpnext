@@ -63,7 +63,15 @@ tfgrid-compose up tfgrid-erpnext \
 Complete deployment with DNS automation and all options:
 
 ```bash
-# With Cloudflare DNS and company setup
+# With Name.com DNS (recommended - fully automated)
+tfgrid-compose up tfgrid-erpnext \
+  --env DOMAIN=erp.example.com \
+  --env DNS_PROVIDER=name.com \
+  --env NAMECOM_USERNAME=myuser \
+  --env NAMECOM_API_TOKEN=your-token \
+  --env COMPANY_NAME="My Business"
+
+# With Cloudflare DNS and company setup (recommended - fully automated)
 tfgrid-compose up tfgrid-erpnext \
   --env DOMAIN=erp.example.com \
   --env SSL_EMAIL=admin@example.com \
@@ -79,14 +87,6 @@ tfgrid-compose up tfgrid-erpnext \
   --cpu 4 \
   --memory 8192 \
   --disk 200
-
-# With Name.com DNS
-tfgrid-compose up tfgrid-erpnext \
-  --env DOMAIN=erp.example.com \
-  --env DNS_PROVIDER=name.com \
-  --env NAMECOM_USERNAME=myuser \
-  --env NAMECOM_API_TOKEN=your-token \
-  --env COMPANY_NAME="My Business"
 ```
 
 ## Configuration
@@ -95,16 +95,18 @@ tfgrid-compose up tfgrid-erpnext \
 
 #### Domain & DNS
 
+> **Recommended:** Use `name.com` or `cloudflare` for fully automated DNS setup. Namecheap requires manual IP whitelisting in their dashboard before API calls work.
+
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `DOMAIN` | **Yes** | - | Public domain for ERPNext |
 | `SSL_EMAIL` | No | - | Email for Let's Encrypt |
-| `DNS_PROVIDER` | No | `manual` | DNS provider: `manual`, `name.com`, `namecheap`, `cloudflare` |
+| `DNS_PROVIDER` | No | `manual` | DNS provider: `manual`, `name.com`, `cloudflare`, `namecheap` |
 | `NAMECOM_USERNAME` | If name.com | - | Name.com username |
 | `NAMECOM_API_TOKEN` | If name.com | - | Name.com API token |
+| `CLOUDFLARE_API_TOKEN` | If cloudflare | - | Cloudflare API token |
 | `NAMECHEAP_API_USER` | If namecheap | - | Namecheap API username (requires IP whitelisting) |
 | `NAMECHEAP_API_KEY` | If namecheap | - | Namecheap API key (requires IP whitelisting) |
-| `CLOUDFLARE_API_TOKEN` | If cloudflare | - | Cloudflare API token |
 
 #### ERPNext Settings
 
