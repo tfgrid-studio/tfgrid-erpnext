@@ -1,5 +1,9 @@
 # TFGrid ERPNext
 
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/tfgrid-studio/tfgrid-erpnext)](https://github.com/tfgrid-studio/tfgrid-erpnext/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/tfgrid-studio/tfgrid-erpnext)](https://github.com/tfgrid-studio/tfgrid-erpnext/issues)
+
 Open-source ERP system (Frappe/ERPNext) on ThreeFold Grid.
 
 ## Overview
