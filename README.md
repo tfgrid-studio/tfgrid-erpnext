@@ -272,6 +272,13 @@ docker compose -f pwd.yml up -d
 tfgrid-compose migrate
 ```
 
+## Support
+
+- **📚 Documentation:** [docs.tfgrid.studio](https://docs.tfgrid.studio)
+- **🐛 Issues:** [GitHub Issues](https://github.com/tfgrid-studio/tfgrid-erpnext/issues)
+- **💬 Discussions:** [GitHub Discussions](https://github.com/orgs/tfgrid-studio/discussions)
+- **📧 Contact:** [tfgrid.studio/contact](https://tfgrid.studio/contact)
+
 ## License
 
 Apache 2.0
