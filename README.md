@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/tfgrid-studio/tfgrid-erpnext)](https://github.com/tfgrid-studio/tfgrid-erpnext/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/tfgrid-studio/tfgrid-erpnext)](https://github.com/tfgrid-studio/tfgrid-erpnext/issues)
 
-Open-source ERP system (Frappe/ERPNext) on ThreeFold Grid.
+Open-source ERP system (Frappe/ERPNext) on ThreeFold Grid. 
 
 ## Overview
 
